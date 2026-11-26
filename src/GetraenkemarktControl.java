@@ -14,12 +14,9 @@ public class GetraenkemarktControl {
 
 	public void leseAusDatei(String typ) {
 		try {
-			if ("csv".equals(typ)) {
-				this.getrModel.leseAusDatei(typ);
-				this.getrView.zeigeInformationsfensterAn("Das Getraenk wurde gelesen!");
-			} else {
-				this.getrView.zeigeInformationsfensterAn("Noch nicht implementiert!");
-			}
+			this.getrModel.leseAusDatei(typ);
+			this.getrView.zeigeInformationsfensterAn("Das Getraenk wurde gelesen!");
+			
 		} catch (IOException exc) {
 			this.getrView.zeigeFehlermeldungsfensterAn("IOException beim Lesen!");
 		} catch (Exception exc) {

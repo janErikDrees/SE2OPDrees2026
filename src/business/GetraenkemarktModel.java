@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import fileCreatorsDrees.*;
+
 public class GetraenkemarktModel {
 	private Getraenk getraenk;
 
@@ -21,18 +23,18 @@ public class GetraenkemarktModel {
 	}
 
 	public void leseAusDatei(String typ) throws IOException {
-		if ("csv".equals(typ)) {
-			BufferedReader ein = new BufferedReader(new FileReader("Getraenk.csv"));
-			String[] zeile = ein.readLine().split(";");
-			this.getraenk = new Getraenk(
-				zeile[0],
-				Float.parseFloat(zeile[1]),
-				Float.parseFloat(zeile[2]),
-				zeile[3],
-				zeile[4].split("_")
-			);
-			ein.close();
+		ReaderProductDrees produkt;
+		ReaderCreatorDrees creator;
+		if (typ == "csv") {
+			creator = new ReaderCsvCreator();
+		} else {
+			creator = new ReaderTxtCreator();
 		}
+		produkt = creator.fabrikmethode();
+		String[] einlese = produkt.leseAusDatei();
+		this.getraenk = new Getraenk(einlese[0], Float.parseFloat(einlese[1]), Float.parseFloat(einlese[2]), einlese[3], einlese[4].split("_"));
+		produkt.schliesseDatei();
+		
 	}
 
 	public void schreibeGetraenkeInCsvDatei() throws IOException {
